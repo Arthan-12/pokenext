@@ -4,6 +4,20 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  /*  MAIN COLORS */
+  --red: #ff0000;
+  --boston-university-red: #cc0000;
+  --cerulean-blue: #3b4cca;
+  --golden-yellow: #ffde00;
+  --golden-foil: #b3a125;
+
+  /* COLORS */
+
+  --cultured: #f8f8f8;
+  --pokeball-black: #010101;
+  --pokeball-white: #fff;
+  --pokeball-red: #eb2127;
 }
 
 a {

@@ -32,7 +32,7 @@ const NavBar: React.FC<Props> = ({
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               {routes.map((route, index) => (
-                <Link href={`${route}`} key={index}>
+                <Link key={index} href={`${route}`}>
                   <label className={styles.routeLabel}>{route}</label>
                 </Link>
               ))}

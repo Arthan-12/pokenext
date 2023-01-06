@@ -96,7 +96,7 @@ export default function Home() {
 
   const catchPokemon = () => {
     let pokeList: Pokemon[] = [];
-    pokeList = pokemonCaptureList;
+    pokeList = JSON.parse(sessionStorage.getItem('pokemonList'));
     setContext([...pokeList, searchedPokemon]);
     console.log(context);
     const stringPokemonList = JSON.stringify([...pokeList, searchedPokemon]);

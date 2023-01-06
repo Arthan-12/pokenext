@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Card, Badge } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Pokemon } from '../../models/pokemon-model';
 import PokemonTypeBadge from '../pokemon-type-badge/pokemon-type-badge';
 import styles from './pokemon-card.module.css';

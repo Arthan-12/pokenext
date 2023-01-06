@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { pokemonListState, selectedPokemonState } from '../atoms/pokemon-atom';
 import { notFoundPokemonState } from '../atoms/error-atom';
@@ -16,8 +16,19 @@ import PokeballLoader from '../components/pokeball-loader/pokemon-loader';
 import PokemonLoader from '../components/pokeball-loader/pokemon-loader';
 import Navbar from '../components/navbar/navbar';
 import { Pokemon } from '../models/pokemon-model';
+import React from 'react';
+import PokemonContext from '../contexts/pokemon-context';
 
 const initialPokeList: Pokemon[] = [];
+const POKEMON_DEFAULT_VALUE = {
+  name: null,
+  id: null,
+  sprites: null,
+  types: [],
+  weight: null,
+  height: null,
+  order: null,
+};
 
 export default function Home() {
   // HOOK ZONE
@@ -25,9 +36,12 @@ export default function Home() {
   const [pokemonCaptureList, setPokemonCaptureList] = useState(initialPokeList);
   const [selectedCard, toggleSelected] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [searchedPokemon, setSearchedPokemon] = useState(null);
 
-  const [selectedPokemon, setSelectedPokemon] =
-    useRecoilState(selectedPokemonState);
+  const [context, setContext] = useState<Pokemon | null>(null);
+
+  // const [selectedPokemon, setSelectedPokemon] =
+  //   useRecoilState(selectedPokemonState);
   const getPokemon = useRecoilValue(selectedPokemonState);
   const [notFoundPokemonPlaceholder, setNotFoundPokemonPlaceholder] =
     useRecoilState(notFoundPokemonState);
@@ -36,10 +50,6 @@ export default function Home() {
   const [pokemonList, setPokemonToList] = useRecoilState(pokemonListState);
 
   // FUNCTIONS ZONE
-
-  const pokeLoader = () => {
-    return `${selectedPokemon?.sprites?.front_default}`;
-  };
 
   const getTypedValue = (inputValue: string) => {
     setValue(inputValue);
@@ -70,14 +80,16 @@ export default function Home() {
       setNotFoundPokemonPlaceholder(false);
       PokemonApiService.searchPokemon(pokemon)
         .then((response: any) => {
-          setSelectedPokemon(response);
+          setSearchedPokemon(response);
+          setContext(response);
           toggleSelected(false);
           setSearchLoadingPlaceholder(false);
+          console.log(context);
         })
         .catch((error) => {
           const errorCode = error.response.status;
           ErrorService.setErrorStatus(errorCode);
-          setSelectedPokemon({});
+          setSearchedPokemon(null);
           setNotFoundPokemonPlaceholder(true);
         });
     }
@@ -86,9 +98,10 @@ export default function Home() {
   const catchPokemon = () => {
     let pokeList: Pokemon[] = [];
     pokeList = pokemonCaptureList;
-    const teste = [...pokeList, selectedPokemon];
-    setPokemonToList(teste);
-    setPokemonCaptureList(teste);
+    const stringPokeList = JSON.stringify([...pokeList, searchedPokemon]);
+    sessionStorage.setItem('pokemonCapturedList', stringPokeList);
+    // setPokemonToList(teste);
+    setPokemonCaptureList([...pokeList, searchedPokemon]);
     setShowToast(true);
   };
 
@@ -103,76 +116,78 @@ export default function Home() {
       <Navbar />
 
       {/* CONTENT */}
-      <main className={styles.main} onKeyUp={handleKeyUp}>
-        <h1 className={styles.title}>Welcome to Pokenext!</h1>
-        <PokemonSearchInput required={true} getTypedValue={getTypedValue} />
-        <Container
-          style={{
-            marginBottom: '2rem',
-            display: 'flex',
-            justifyContent: 'center',
-            width: '22vw',
-          }}
-        >
-          <Button
-            variant="danger"
-            style={{ marginRight: '1rem' }}
-            onClick={() => search(inputValue)}
+      <PokemonContext.Provider value={{ context, setContext }}>
+        <main className={styles.main} onKeyUp={handleKeyUp}>
+          <h1 className={styles.title}>Welcome to Pokenext!</h1>
+          <PokemonSearchInput required={true} getTypedValue={getTypedValue} />
+          <Container
+            style={{
+              marginBottom: '2rem',
+              display: 'flex',
+              justifyContent: 'center',
+              width: '22vw',
+            }}
           >
-            <label className={styles.buttonLabel}>Search Pokemon!</label>
-          </Button>
-          <Button
-            variant="warning"
-            style={{ marginLeft: '1rem' }}
-            onClick={getSearchedPokemon}
-          >
-            <label className={styles.buttonLabel}>Get Pokemon Info</label>
-          </Button>
-        </Container>
+            <Button
+              variant="danger"
+              style={{ marginRight: '1rem' }}
+              onClick={() => search(inputValue)}
+            >
+              <label className={styles.buttonLabel}>Search Pokemon!</label>
+            </Button>
+            <Button
+              variant="warning"
+              style={{ marginLeft: '1rem' }}
+              onClick={getSearchedPokemon}
+            >
+              <label className={styles.buttonLabel}>Get Pokemon Info</label>
+            </Button>
+          </Container>
 
-        {selectedPokemon.sprites && !searchLoadingPlaceholder ? (
-          <PokemonCard
-            selected={selectedCard}
-            onClick={selectPokemon}
-            pokemon={selectedPokemon}
-          />
-        ) : (
-          <></>
-        )}
-        {!notFoundPokemonPlaceholder &&
-        !searchLoadingPlaceholder &&
-        !selectedPokemon.id ? (
-          <Image
-            width={144}
-            height={144}
-            src={'/svg/pokeball.svg'}
-            alt="pokeball"
-          />
-        ) : (
-          <></>
-        )}
-        {notFoundPokemonPlaceholder ? <NotFoundPokemon /> : <></>}
-        {searchLoadingPlaceholder && !notFoundPokemonPlaceholder ? (
-          <PokemonLoader />
-        ) : (
-          <></>
-        )}
-        {selectedCard && selectedPokemon.id ? (
-          <Button className="mt-3" onClick={catchPokemon}>
-            Catch Pokémon!
-          </Button>
-        ) : null}
-        <Toast
-          onClose={() => setShowToast(false)}
-          show={showToast}
-          delay={3000}
-          autohide
-          className="mt-3"
-          bg="success"
-        >
-          <Toast.Body>Woohoo, Pokémon captured!</Toast.Body>
-        </Toast>
-      </main>
+          {searchedPokemon && !searchLoadingPlaceholder ? (
+            <PokemonCard
+              selected={selectedCard}
+              onClick={selectPokemon}
+              pokemon={searchedPokemon}
+            />
+          ) : (
+            <></>
+          )}
+          {notFoundPokemonPlaceholder &&
+          searchLoadingPlaceholder &&
+          searchedPokemon.id ? (
+            <Image
+              width={144}
+              height={144}
+              src={'/svg/pokeball.svg'}
+              alt="pokeball"
+            />
+          ) : (
+            <></>
+          )}
+          {notFoundPokemonPlaceholder ? <NotFoundPokemon /> : <></>}
+          {searchLoadingPlaceholder && !notFoundPokemonPlaceholder ? (
+            <PokemonLoader />
+          ) : (
+            <></>
+          )}
+          {selectedCard && searchedPokemon.id ? (
+            <Button className="mt-3" onClick={catchPokemon}>
+              Catch Pokémon!
+            </Button>
+          ) : null}
+          <Toast
+            onClose={() => setShowToast(false)}
+            show={showToast}
+            delay={3000}
+            autohide
+            className="mt-3"
+            bg="success"
+          >
+            <Toast.Body>Woohoo, Pokémon captured!</Toast.Body>
+          </Toast>
+        </main>
+      </PokemonContext.Provider>
 
       {/* FOOTER */}
       <footer className={styles.footer}>

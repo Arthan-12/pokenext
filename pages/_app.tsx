@@ -5,13 +5,16 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil';
+import { SSRProvider } from 'react-bootstrap';
 
 config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
-      <Component {...pageProps} />
+      <SSRProvider>
+        <Component {...pageProps} />
+      </SSRProvider>
     </RecoilRoot>
   );
 }

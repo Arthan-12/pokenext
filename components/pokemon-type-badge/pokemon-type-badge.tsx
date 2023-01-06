@@ -3,6 +3,7 @@ import { Badge } from 'react-bootstrap';
 
 interface Props {
   pokemonType?: string;
+  display?: 'horizontal' | 'vertical';
 }
 
 const PokemonTypeBadge: React.FC<Props> = ({ pokemonType = '' }) => {
@@ -35,7 +36,7 @@ const PokemonTypeBadge: React.FC<Props> = ({ pokemonType = '' }) => {
     <>
       <Badge
         bg={badgeColor}
-        style={{ margin: '1rem', textTransform: 'uppercase' }}
+        style={{ margin: '0.5rem', textTransform: 'uppercase' }}
       >
         {pokemonType}
       </Badge>

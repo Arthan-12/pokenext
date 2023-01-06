@@ -5,25 +5,48 @@ import DragAndDrop from '../components/drag-and-drop/drag-and-drop';
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { pokemonListState } from '../atoms/pokemon-atom';
+import { Pokemon } from '../models/pokemon-model';
+import PokemonContext from '../contexts/pokemon-context';
+
+const initialPokeList: Pokemon[] = [];
 
 export default function MyTeam() {
-  const capturedPokemon = useRecoilValue(pokemonListState);
+  const [pokemonCaptureList, setPokemonCaptureList] = useState(initialPokeList);
 
   useEffect(() => {
-    getSelectedPokemon();
+    // getSelectedPokemon();
+    // const capturedPokemon = JSON.parse(
+    //   sessionStorage.getItem('pokemonCapturedList')!
+    // ) as Pokemon[];
+    // console.log(capturedPokemon);
+    // return () => {
+    //   setPokemonCaptureList(capturedPokemon), [pokemonCaptureList];
+    // };
+    teste();
   });
 
+  const teste = () => {};
+
   const getSelectedPokemon = () => {
+    const capturedPokemon = JSON.parse(
+      sessionStorage.getItem('pokemonCapturedList')!
+    ) as Pokemon[];
     console.log(capturedPokemon);
+    return setPokemonCaptureList(capturedPokemon);
   };
 
   return (
     <>
+      <PokemonContext.Consumer>
+        {(searchedPokemon) =>
+          searchedPokemon && <div>{searchedPokemon.name}</div>
+        }
+      </PokemonContext.Consumer>
       <Navbar />
       <main className={styles.main}>
         <p>teste</p>
-        {capturedPokemon[0].id ? (
-          <DragAndDrop pokemonSquad={capturedPokemon}></DragAndDrop>
+        {pokemonCaptureList.length > 0 ? (
+          <DragAndDrop pokemonSquad={pokemonCaptureList}></DragAndDrop>
         ) : (
           <p>Selecione Pokémons para começar mexer em seu time!</p>
         )}

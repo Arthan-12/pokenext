@@ -9,7 +9,7 @@ interface Props {
 }
 
 const NavBar: React.FC<Props> = ({
-  appTitle = 'Pokénext',
+  appTitle = 'Pokenext',
   routes = ['pokedex', 'my-team'],
 }) => {
   return (

@@ -4,10 +4,21 @@
   border: 1px solid;
   border-radius: 8px;
   padding: 8px;
+  height: 20vh;
+  margin: 4px;
 }
 
 .content {
   width: 10vw;
   display: flex;
   flex-direction: column;
+}
+
+.label {
+  margin-left: 1rem;
+  text-transform: uppercase;
+}
+
+.typeContainer {
+  width: 192px;
 }

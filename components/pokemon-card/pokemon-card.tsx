@@ -23,7 +23,6 @@ const PokemonCard: React.FC<Props> = ({
     <Card
       bg="light"
       text="primary"
-      // border="primary"
       autoCapitalize="true"
       style={{ width: '18rem' }}
       className={`${styles.card} ${selected ? styles.selected : ''}`}

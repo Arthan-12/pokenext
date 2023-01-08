@@ -2,13 +2,13 @@ import { createContext } from 'react';
 import { Pokemon } from '../models/pokemon-model';
 
 type PokemonListContextType = {
-  context: Pokemon[] | null;
-  setContext: React.Dispatch<React.SetStateAction<Pokemon[] | null>>;
+  listContext: Pokemon[] | null;
+  setListContext: React.Dispatch<React.SetStateAction<Pokemon[] | null>>;
 };
 
 const pokemonListContextState = {
-  context: [],
-  setContext: () => {},
+  listContext: [],
+  setListContext: () => {},
 };
 
 const PokemonListContext = createContext<PokemonListContextType>(

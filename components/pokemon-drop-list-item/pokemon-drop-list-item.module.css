@@ -1,24 +1,71 @@
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  position: relative;
   border: 1px solid;
   border-radius: 8px;
   padding: 8px;
   height: 100px;
   margin: 4px;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+  background-color: var(--bg-blue);
+  color: var(--pokeball-white);
+}
+.container:hover {
+  background-color: var(--bg-blue-hover);
 }
 
 .content {
   width: 10vw;
+  min-width: 240px;
   display: flex;
   flex-direction: column;
 }
 
 .label {
-  margin-left: 1rem;
+  min-width: 160px;
+  max-width: 160px;
   text-transform: uppercase;
 }
 
 .typeContainer {
+  display: flex;
+  align-items: center;
+  height: 60px;
   width: 192px;
+  padding-left: 72px;
+}
+
+.firstBox {
+  width: 260px;
+  display: flex;
+  justify-content: left;
+  padding-left: 80px;
+  align-items: center;
+}
+
+.secondBox {
+  height: 60px;
+  border-radius: 4px;
+  background-color: var(--bg-blue-light);
+}
+
+.pokemonSprite {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.closeIconBox {
+  width: 18px;
+  height: 14px;
+  border-radius: 4px;
+  margin-left: 0;
+  background-color: var(--pokeball-white);
+  position: relative;
+}
+
+.closeIcon {
+  position: absolute;
+  top: -2px;
 }

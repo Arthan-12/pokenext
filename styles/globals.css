@@ -18,6 +18,12 @@ body {
   --pokeball-black: #010101;
   --pokeball-white: #fff;
   --pokeball-red: #eb2127;
+
+  /* BG COLORS */
+  --bg-blue: #3890d8;
+  --bg-blue-light: #80c0d8;
+  --bg-blue-hover: #78d0e8;
+  --bg-blue-light-hover: #a8e8f8;
 }
 
 a {

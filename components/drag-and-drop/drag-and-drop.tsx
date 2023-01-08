@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { textSpanEnd } from 'typescript';
 import { Pokemon } from '../../models/pokemon-model';
 import PokemonDropListItem from '../pokemon-drop-list-item/pokemon-drop-list-item';
 
@@ -10,13 +11,22 @@ interface Props {
 const DragAndDrop: React.FC<Props> = ({ pokemonSquad = [] }) => {
   const defaultPokemonList: Pokemon[] = [];
   // React state to track order of items
-  const [itemList, setItemList] = useState(defaultPokemonList);
+  const [itemList, setItemList] = useState(pokemonSquad);
   const [isBrowser, setIsBrowser] = useState(false);
 
   useEffect(() => {
     setIsBrowser(true);
-    setItemList(pokemonSquad);
   }, []);
+
+  const removePokemon = (id: number) => {
+    const filteredPokemonList: Pokemon[] = itemList.filter(
+      (pokemon) => pokemon.id !== id
+    );
+    const stringfiedPokemonList = JSON.stringify(filteredPokemonList);
+    setItemList(filteredPokemonList);
+    sessionStorage.setItem('pokemonList', stringfiedPokemonList);
+    console.log(filteredPokemonList);
+  };
 
   // Function to update list on drop
   const handleDrop = (droppedItem) => {
@@ -33,7 +43,7 @@ const DragAndDrop: React.FC<Props> = ({ pokemonSquad = [] }) => {
   return (
     <div>
       <DragDropContext onDragEnd={handleDrop}>
-        {isBrowser ? (
+        {isBrowser && pokemonSquad ? (
           <Droppable droppableId="list-container">
             {(provided) => (
               <div
@@ -41,7 +51,7 @@ const DragAndDrop: React.FC<Props> = ({ pokemonSquad = [] }) => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {itemList.map((item, index) => (
+                {itemList?.map((item, index) => (
                   <Draggable
                     key={item.id}
                     draggableId={item.name}
@@ -54,8 +64,10 @@ const DragAndDrop: React.FC<Props> = ({ pokemonSquad = [] }) => {
                         {...provided.dragHandleProps}
                         {...provided.draggableProps}
                       >
-                        {/* {item.name} */}
-                        <PokemonDropListItem pokemon={item} />
+                        <PokemonDropListItem
+                          pokemon={item}
+                          removePokemon={() => removePokemon(item.id)}
+                        />
                       </div>
                     )}
                   </Draggable>

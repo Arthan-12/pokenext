@@ -1,9 +1,6 @@
 import { useState } from 'react';
 
 import styles from './pokemon-search-input.module.css';
-import { useRecoilState } from 'recoil';
-import { selectedPokemonState } from '../../atoms/pokemon-atom';
-
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
@@ -14,16 +11,16 @@ interface Props {
   input?: string;
   required?: boolean;
   getTypedValue: (value?: any) => void;
+  clearSelectedPokemon: (clear?: boolean) => void;
 }
 
 const PokemonSearchInput: React.FC<Props> = ({
   input = null,
   required = false,
   getTypedValue,
+  clearSelectedPokemon,
 }) => {
   const [inputValue, setValue] = useState('');
-  const [selectedPokemon, setSelectedPokemon] =
-    useRecoilState(selectedPokemonState);
   const [disableClear, setDisableClear] = useState(true);
 
   const {
@@ -40,8 +37,8 @@ const PokemonSearchInput: React.FC<Props> = ({
   const clear = () => {
     if (!disableClear) {
       resetField('searchInput');
-      setSelectedPokemon({});
       setDisableClear(true);
+      clearSelectedPokemon(true);
     }
   };
 

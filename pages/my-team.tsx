@@ -8,7 +8,11 @@ const initialPokeList: Pokemon[] = [];
 
 export default function MyTeam() {
   const [pokemonCaptureList, setPokemonCaptureList] = useState(initialPokeList);
-  const pokemonList = JSON.parse(sessionStorage.getItem('pokemonList'));
+  let pokemonList: Pokemon[] = [];
+
+  if (typeof window !== 'undefined') {
+    pokemonList = JSON.parse(sessionStorage.getItem('pokemonList'));
+  }
 
   useEffect(() => {
     setPokemonCaptureList(pokemonList);
@@ -18,11 +22,17 @@ export default function MyTeam() {
     <>
       <Navbar />
       <main className={styles.main}>
-        <p>teste</p>
-        {pokemonCaptureList.length > 0 ? (
-          <DragAndDrop pokemonSquad={pokemonCaptureList}></DragAndDrop>
+        {!pokemonCaptureList ? (
+          <p>Capture pelo menos um Pokémon para começar!</p>
         ) : (
-          <p>Selecione Pokémons para começar mexer em seu time!</p>
+          <>
+            <p>My Pokémon Squad!</p>
+            {pokemonCaptureList.length > 0 ? (
+              <DragAndDrop pokemonSquad={pokemonCaptureList}></DragAndDrop>
+            ) : (
+              <p>Selecione Pokémons para começar mexer em seu time!</p>
+            )}
+          </>
         )}
       </main>
 

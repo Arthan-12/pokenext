@@ -4,6 +4,7 @@ import styles from './pokemon-drop-list-item.module.css';
 import PokemonTypeBadge from '../pokemon-type-badge/pokemon-type-badge';
 import { faRectangleXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 interface Props {
   pokemon: Pokemon;
@@ -29,15 +30,20 @@ const PokemonDropListItem: React.FC<Props> = ({
             {pokemon?.name} - {pokemon?.order}
           </label>
           <div className={styles.closeIconBox}>
-            <FontAwesomeIcon
-              titleId="close-icon1"
-              fontSize="18"
-              color="#dc3545"
-              cursor="pointer"
-              className={styles.closeIcon}
-              onClick={removePokemon}
-              icon={faRectangleXmark}
-            />
+            <OverlayTrigger
+              placement="right"
+              overlay={<Tooltip id={`tooltip-right`}>Remover Pokémon</Tooltip>}
+            >
+              <FontAwesomeIcon
+                titleId="close-icon1"
+                fontSize="18"
+                color="#dc3545"
+                cursor="pointer"
+                className={styles.closeIcon}
+                onClick={removePokemon}
+                icon={faRectangleXmark}
+              />
+            </OverlayTrigger>
           </div>
         </div>
         <div className={styles.secondBox}>

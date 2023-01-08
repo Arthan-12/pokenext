@@ -31,7 +31,8 @@ export default function Home() {
   const [inputValue, setValue] = useState('');
   const [pokemonCaptureList, setPokemonCaptureList] = useState(initialPokeList);
   const [selectedCard, toggleSelected] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+  const [showSuccesToast, setSuccesToast] = useState(false);
+  const [showErrorToast, setErrorToast] = useState(false);
   const [searchedPokemon, setSearchedPokemon] = useState(null);
   const [notFound, setNotFoundState] = useState(false);
   const [searching, setSearchingState] = useState(false);
@@ -97,13 +98,17 @@ export default function Home() {
     const storageList = JSON.parse(sessionStorage.getItem('pokemonList'));
     if (storageList) {
       pokeList = storageList;
+      if (storageList.find((pokemon) => pokemon.id === searchedPokemon.id)) {
+        setErrorToast(true);
+        return;
+      }
     }
     setListContext([...pokeList, searchedPokemon]);
     console.log(listContext);
     const stringPokemonList = JSON.stringify([...pokeList, searchedPokemon]);
     sessionStorage.setItem('pokemonList', stringPokemonList);
     setPokemonCaptureList([...pokeList, searchedPokemon]);
-    setShowToast(true);
+    setSuccesToast(true);
   };
 
   return (
@@ -135,16 +140,17 @@ export default function Home() {
               }}
             >
               <Button
-                variant="danger"
+                variant="success"
                 style={{ marginRight: '1rem' }}
                 onClick={() => search(inputValue)}
               >
                 <label className={styles.buttonLabel}>Search Pokemon!</label>
               </Button>
               <Button
-                variant="warning"
+                variant={searchedPokemon ? 'warning' : 'secondary'}
                 style={{ marginLeft: '1rem' }}
                 onClick={getSearchedPokemon}
+                disabled={!searchedPokemon}
               >
                 <label className={styles.buttonLabel}>Get Pokemon Info</label>
               </Button>
@@ -177,14 +183,28 @@ export default function Home() {
               </Button>
             ) : null}
             <Toast
-              onClose={() => setShowToast(false)}
-              show={showToast}
+              onClose={() => setSuccesToast(false)}
+              show={showSuccesToast}
               delay={3000}
               autohide
               className="mt-3"
               bg="success"
             >
-              <Toast.Body>Woohoo, Pokémon captured!</Toast.Body>
+              <Toast.Body style={{ color: '#ffffff' }}>
+                Woohoo, Pokémon captured!
+              </Toast.Body>
+            </Toast>
+            <Toast
+              onClose={() => setErrorToast(false)}
+              show={showErrorToast}
+              delay={3000}
+              autohide
+              className="mt-3"
+              bg="danger"
+            >
+              <Toast.Body style={{ color: '#ffffff' }}>
+                Sorry, you've already captured this Pokémon! Try another one
+              </Toast.Body>
             </Toast>
           </main>
         </PokemonContext.Provider>

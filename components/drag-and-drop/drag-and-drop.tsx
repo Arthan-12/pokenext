@@ -6,9 +6,13 @@ import PokemonDropListItem from '../pokemon-drop-list-item/pokemon-drop-list-ite
 
 interface Props {
   pokemonSquad: Pokemon[];
+  updatedPokemonList?: (pokemonList: Pokemon[]) => void;
 }
 
-const DragAndDrop: React.FC<Props> = ({ pokemonSquad = [] }) => {
+const DragAndDrop: React.FC<Props> = ({
+  pokemonSquad = [],
+  updatedPokemonList,
+}) => {
   const defaultPokemonList: Pokemon[] = [];
   // React state to track order of items
   const [itemList, setItemList] = useState(pokemonSquad);
@@ -26,6 +30,7 @@ const DragAndDrop: React.FC<Props> = ({ pokemonSquad = [] }) => {
     setItemList(filteredPokemonList);
     sessionStorage.setItem('pokemonList', stringfiedPokemonList);
     console.log(filteredPokemonList);
+    updatedPokemonList(filteredPokemonList);
   };
 
   // Function to update list on drop

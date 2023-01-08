@@ -3,6 +3,7 @@ import Navbar from '../components/navbar/navbar';
 import DragAndDrop from '../components/drag-and-drop/drag-and-drop';
 import { useState, useEffect } from 'react';
 import { Pokemon } from '../models/pokemon-model';
+import { Button } from 'react-bootstrap';
 
 const initialPokeList: Pokemon[] = [];
 
@@ -16,7 +17,17 @@ export default function MyTeam() {
 
   useEffect(() => {
     setPokemonCaptureList(pokemonList);
+    console.log(pokemonCaptureList);
   }, [JSON.stringify(pokemonList)]);
+
+  const clearPokemonList = () => {
+    setPokemonCaptureList([]);
+    sessionStorage.setItem('pokemonList', null);
+  };
+
+  const updatedPokemonList = (filteredPokemonList: Pokemon[]) => {
+    setPokemonCaptureList(filteredPokemonList);
+  };
 
   return (
     <>
@@ -28,7 +39,15 @@ export default function MyTeam() {
           <>
             <p>My Pokémon Squad!</p>
             {pokemonCaptureList.length > 0 ? (
-              <DragAndDrop pokemonSquad={pokemonCaptureList}></DragAndDrop>
+              <>
+                <DragAndDrop
+                  pokemonSquad={pokemonCaptureList}
+                  updatedPokemonList={updatedPokemonList}
+                ></DragAndDrop>
+                <Button variant="danger" onClick={clearPokemonList}>
+                  <label>Clear List</label>
+                </Button>
+              </>
             ) : (
               <p>Selecione Pokémons para começar mexer em seu time!</p>
             )}

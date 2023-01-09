@@ -4,16 +4,18 @@ import { useState } from 'react';
 import { faSquarePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './pokemon-list.module.css';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Badge, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 interface Props {
   pokemonList: Pokemon[];
+  pokemonSquadList: Pokemon[];
   addPokemon: (id: number) => void;
   removePokemon: (id: number) => void;
 }
 
 const PokemonList: React.FC<Props> = ({
   pokemonList = [],
+  pokemonSquadList,
   addPokemon,
   removePokemon,
 }) => {
@@ -27,12 +29,20 @@ const PokemonList: React.FC<Props> = ({
     }
   };
 
+  const disablePokemon = (id: number) => {
+    if (pokemonSquadList.find((pokemon) => pokemon.id === id)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <>
       <ListGroup as="ul">
         {pokemonList.map((pokemon, index) => (
           <div key={pokemon.id}>
-            {currentIndex === index ? (
+            {currentIndex === index && !disablePokemon(pokemon.id) ? (
               <ListGroup.Item
                 as="li"
                 onClick={() => selectPokemon(index)}
@@ -78,8 +88,22 @@ const PokemonList: React.FC<Props> = ({
                 </div>
               </ListGroup.Item>
             ) : (
-              <ListGroup.Item as="li" onClick={() => selectPokemon(index)}>
-                {pokemon.id} - {pokemon.name}
+              <ListGroup.Item
+                className={styles.selectedItem}
+                as="li"
+                onClick={() => selectPokemon(index)}
+                disabled={disablePokemon(pokemon.id)}
+              >
+                <label className={styles.listLabel}>
+                  {pokemon.id} - {pokemon.name}
+                </label>
+                {disablePokemon(pokemon.id) ? (
+                  <Badge pill bg="success">
+                    Selected
+                  </Badge>
+                ) : (
+                  <></>
+                )}
               </ListGroup.Item>
             )}
           </div>

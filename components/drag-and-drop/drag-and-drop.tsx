@@ -23,10 +23,7 @@ const DragAndDrop: React.FC<Props> = ({ pokemonSquad, updatedPokemonList }) => {
     const filteredPokemonList: Pokemon[] = itemList.filter(
       (pokemon) => pokemon.id !== id
     );
-    const stringfiedPokemonList = JSON.stringify(filteredPokemonList);
     setItemList(filteredPokemonList);
-    sessionStorage.setItem('pokemonList', stringfiedPokemonList);
-    console.log(filteredPokemonList);
     updatedPokemonList(filteredPokemonList);
   };
 

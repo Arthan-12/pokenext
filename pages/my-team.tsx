@@ -9,7 +9,8 @@ import PokemonList from '../components/pokemon-list.tsx/pokemon-list';
 const initialPokeList: Pokemon[] = [];
 
 export default function MyTeam() {
-  const [pokemonCaptureList, setPokemonCaptureList] = useState(initialPokeList);
+  const [pokemonCapturedList, setPokemonCapturedList] =
+    useState(initialPokeList);
   const [pokemonSquadTeam, setPokemonSquad] = useState(initialPokeList);
   let pokemonList: Pokemon[] = [];
 
@@ -18,21 +19,21 @@ export default function MyTeam() {
   }
 
   useEffect(() => {
-    setPokemonCaptureList(pokemonList);
-    console.log(pokemonCaptureList);
+    setPokemonCapturedList(pokemonList);
+    console.log(pokemonCapturedList);
   }, [JSON.stringify(pokemonList)]);
 
   const clearPokemonList = () => {
-    setPokemonCaptureList([]);
+    setPokemonCapturedList([]);
     sessionStorage.setItem('pokemonList', null);
   };
 
   const updatedPokemonList = (filteredPokemonList: Pokemon[]) => {
-    setPokemonCaptureList(filteredPokemonList);
+    setPokemonSquad(filteredPokemonList);
   };
 
   const addPokemonToSquad = (id: number) => {
-    const filteredList = pokemonCaptureList.filter(
+    const filteredList = pokemonCapturedList.filter(
       (pokemon) => pokemon.id === id
     );
     const pokemonSquadList = [...pokemonSquadTeam, ...filteredList];
@@ -40,13 +41,25 @@ export default function MyTeam() {
     console.log(pokemonSquadList);
   };
 
-  const removePokemonFromCaptured = (id: number) => {};
+  const removePokemonFromCaptured = (id: number) => {
+    const filteredPokemonList: Pokemon[] = pokemonCapturedList.filter(
+      (pokemon) => pokemon.id !== id
+    );
+    const stringfiedPokemonList = JSON.stringify(filteredPokemonList);
+    setPokemonCapturedList(filteredPokemonList);
+    sessionStorage.setItem('pokemonList', stringfiedPokemonList);
+    updatedPokemonList(filteredPokemonList);
+  };
+
+  const clearSquadList = () => {
+    setPokemonSquad([]);
+  };
 
   return (
     <>
       <Navbar />
       <main className={styles.main}>
-        {!pokemonCaptureList ? (
+        {!pokemonCapturedList ? (
           <p>Capture pelo menos um Pokémon para começar!</p>
         ) : (
           <>
@@ -54,10 +67,15 @@ export default function MyTeam() {
               <div className={styles.content}>
                 <p>My Captured Pokémon</p>
                 <PokemonList
-                  pokemonList={pokemonCaptureList}
+                  key={JSON.stringify(pokemonSquadTeam)}
+                  pokemonSquadList={pokemonSquadTeam}
+                  pokemonList={pokemonCapturedList}
                   addPokemon={addPokemonToSquad}
                   removePokemon={removePokemonFromCaptured}
                 />
+                <Button variant="danger" onClick={clearPokemonList}>
+                  <label style={{ cursor: 'pointer' }}>Clear List</label>
+                </Button>
               </div>
               <div className={styles.content}>
                 <p>My Pokémon Squad!</p>
@@ -68,7 +86,7 @@ export default function MyTeam() {
                       pokemonSquad={pokemonSquadTeam}
                       updatedPokemonList={updatedPokemonList}
                     ></DragAndDrop>
-                    <Button variant="danger" onClick={clearPokemonList}>
+                    <Button variant="danger" onClick={clearSquadList}>
                       <label style={{ cursor: 'pointer' }}>Clear List</label>
                     </Button>
                   </>

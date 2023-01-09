@@ -4,11 +4,13 @@ import DragAndDrop from '../components/drag-and-drop/drag-and-drop';
 import { useState, useEffect } from 'react';
 import { Pokemon } from '../models/pokemon-model';
 import { Button } from 'react-bootstrap';
+import PokemonList from '../components/pokemon-list.tsx/pokemon-list';
 
 const initialPokeList: Pokemon[] = [];
 
 export default function MyTeam() {
   const [pokemonCaptureList, setPokemonCaptureList] = useState(initialPokeList);
+  const [pokemonSquadTeam, setPokemonSquad] = useState(initialPokeList);
   let pokemonList: Pokemon[] = [];
 
   if (typeof window !== 'undefined') {
@@ -29,6 +31,17 @@ export default function MyTeam() {
     setPokemonCaptureList(filteredPokemonList);
   };
 
+  const addPokemonToSquad = (id: number) => {
+    const filteredList = pokemonCaptureList.filter(
+      (pokemon) => pokemon.id === id
+    );
+    const pokemonSquadList = [...pokemonSquadTeam, ...filteredList];
+    setPokemonSquad(pokemonSquadList);
+    console.log(pokemonSquadList);
+  };
+
+  const removePokemonFromCaptured = (id: number) => {};
+
   return (
     <>
       <Navbar />
@@ -37,20 +50,35 @@ export default function MyTeam() {
           <p>Capture pelo menos um Pokémon para começar!</p>
         ) : (
           <>
-            <p>My Pokémon Squad!</p>
-            {pokemonCaptureList.length > 0 ? (
-              <>
-                <DragAndDrop
-                  pokemonSquad={pokemonCaptureList}
-                  updatedPokemonList={updatedPokemonList}
-                ></DragAndDrop>
-                <Button variant="danger" onClick={clearPokemonList}>
-                  <label>Clear List</label>
-                </Button>
-              </>
-            ) : (
-              <p>Selecione Pokémons para começar mexer em seu time!</p>
-            )}
+            <div className={styles.containerAlt}>
+              <div className={styles.content}>
+                <p>My Captured Pokémon</p>
+                <PokemonList
+                  pokemonList={pokemonCaptureList}
+                  addPokemon={addPokemonToSquad}
+                  removePokemon={removePokemonFromCaptured}
+                />
+              </div>
+              <div className={styles.content}>
+                <p>My Pokémon Squad!</p>
+                {pokemonSquadTeam.length > 0 ? (
+                  <>
+                    <DragAndDrop
+                      key={JSON.stringify(pokemonSquadTeam)}
+                      pokemonSquad={pokemonSquadTeam}
+                      updatedPokemonList={updatedPokemonList}
+                    ></DragAndDrop>
+                    <Button variant="danger" onClick={clearPokemonList}>
+                      <label style={{ cursor: 'pointer' }}>Clear List</label>
+                    </Button>
+                  </>
+                ) : (
+                  <label style={{ cursor: 'pointer' }}>
+                    Selecione Pokémons para começar mexer em seu time!
+                  </label>
+                )}
+              </div>
+            </div>
           </>
         )}
       </main>

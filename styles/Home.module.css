@@ -1,5 +1,14 @@
-.container {
-  /* padding: 0 2rem; */
+.containerAlt {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  min-width: 300px;
+  border: 1px solid var(--bg-blue);
+  border-radius: 8px;
+  margin: 8px;
+  padding: 4px;
 }
 
 .main {

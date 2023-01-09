@@ -1,0 +1,12 @@
+.activeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+}
+
+.iconBox {
+  width: 50px;
+  display: flex;
+  justify-content: space-between;
+}

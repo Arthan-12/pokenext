@@ -9,10 +9,7 @@ interface Props {
   updatedPokemonList?: (pokemonList: Pokemon[]) => void;
 }
 
-const DragAndDrop: React.FC<Props> = ({
-  pokemonSquad = [],
-  updatedPokemonList,
-}) => {
+const DragAndDrop: React.FC<Props> = ({ pokemonSquad, updatedPokemonList }) => {
   const defaultPokemonList: Pokemon[] = [];
   // React state to track order of items
   const [itemList, setItemList] = useState(pokemonSquad);

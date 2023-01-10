@@ -92,7 +92,9 @@ const PokemonList: React.FC<Props> = ({
                 className={styles.selectedItem}
                 as="li"
                 onClick={() => selectPokemon(index)}
-                disabled={disablePokemon(pokemon.id)}
+                disabled={
+                  disablePokemon(pokemon.id) || pokemonSquadList.length === 6
+                }
               >
                 <label className={styles.listLabel}>
                   {pokemon.id} - {pokemon.name}

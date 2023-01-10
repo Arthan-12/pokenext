@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import { Pokemon } from '../models/pokemon-model';
 import { Button } from 'react-bootstrap';
 import PokemonList from '../components/pokemon-list.tsx/pokemon-list';
+import InfoButton from '../components/info-button/info-button';
+import InfoDialog from '../components/info-dialog/info-dialog';
 
 const initialPokeList: Pokemon[] = [];
 
@@ -60,7 +62,9 @@ export default function MyTeam() {
       <Navbar />
       <main className={styles.main}>
         {!pokemonCapturedList ? (
-          <p>Capture pelo menos um Pokémon para começar!</p>
+          <p style={{ color: '#fff', fontSize: '18px' }}>
+            Capture at least one Pokémon to start your team!
+          </p>
         ) : (
           <>
             <div className={styles.containerAlt}>
@@ -73,7 +77,11 @@ export default function MyTeam() {
                   addPokemon={addPokemonToSquad}
                   removePokemon={removePokemonFromCaptured}
                 />
-                <Button variant="danger" onClick={clearPokemonList}>
+                <Button
+                  style={{ width: '100%', marginTop: 'auto' }}
+                  variant="danger"
+                  onClick={clearPokemonList}
+                >
                   <label style={{ cursor: 'pointer' }}>Clear List</label>
                 </Button>
               </div>
@@ -92,13 +100,14 @@ export default function MyTeam() {
                   </>
                 ) : (
                   <label style={{ cursor: 'pointer' }}>
-                    Selecione Pokémons para começar mexer em seu time!
+                    Select Pokémons to create your squad!
                   </label>
                 )}
               </div>
             </div>
           </>
         )}
+        <InfoDialog info="myTeam" />
       </main>
 
       <footer className={styles.footer}>

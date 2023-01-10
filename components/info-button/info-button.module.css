@@ -1,0 +1,18 @@
+.infoButton {
+  text-align: center;
+  background-color: var(--pokeball-white);
+  position: fixed;
+  right: 0;
+  top: 80%;
+  width: 6em;
+  margin-right: 8px;
+  transition: width 1s;
+  border-radius: 8px;
+  opacity: 0.9;
+}
+
+.infoButton:hover {
+  cursor: pointer;
+  background-color: var(--cultured);
+  width: 8em;
+}

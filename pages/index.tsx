@@ -14,17 +14,9 @@ import { Pokemon } from '../models/pokemon-model';
 import React from 'react';
 import PokemonListContext from '../contexts/pokemon-list-context';
 import PokemonContext from '../contexts/pokemon-context';
+import InfoDialog from '../components/info-dialog/info-dialog';
 
 const initialPokeList: Pokemon[] = [];
-const POKEMON_DEFAULT_VALUE = {
-  name: null,
-  id: null,
-  sprites: null,
-  types: [],
-  weight: null,
-  height: null,
-  order: null,
-};
 
 export default function Home() {
   // HOOK ZONE
@@ -140,14 +132,15 @@ export default function Home() {
               }}
             >
               <Button
-                variant="success"
+                variant={inputValue.length === 0 ? 'secondary' : 'success'}
                 style={{ marginRight: '1rem' }}
                 onClick={() => search(inputValue)}
+                disabled={inputValue.length === 0}
               >
                 <label className={styles.buttonLabel}>Search Pokemon!</label>
               </Button>
               <Button
-                variant={searchedPokemon ? 'warning' : 'secondary'}
+                variant={searchedPokemon ? 'primary' : 'secondary'}
                 style={{ marginLeft: '1rem' }}
                 onClick={getSearchedPokemon}
                 disabled={!searchedPokemon}
@@ -178,7 +171,7 @@ export default function Home() {
             {notFound ? <NotFoundPokemon /> : <></>}
             {searching && !notFound ? <PokemonLoader /> : <></>}
             {selectedCard && searchedPokemon ? (
-              <Button className="mt-3" onClick={catchPokemon}>
+              <Button variant="light" className="mt-3" onClick={catchPokemon}>
                 Catch Pokémon!
               </Button>
             ) : null}
@@ -206,6 +199,7 @@ export default function Home() {
                 Sorry, you've already captured this Pokémon! Try another one
               </Toast.Body>
             </Toast>
+            <InfoDialog info="pokedex" />
           </main>
         </PokemonContext.Provider>
       </PokemonListContext.Provider>

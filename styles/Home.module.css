@@ -4,11 +4,16 @@
 }
 
 .content {
+  display: flex;
+
+  flex-direction: column;
   min-width: 300px;
   border: 1px solid var(--bg-blue);
   border-radius: 8px;
   margin: 8px;
   padding: 4px;
+  background-color: var(--pokeball-white);
+  opacity: 0.9;
 }
 
 .main {
@@ -27,6 +32,8 @@
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
+  background-color: var(--pokeball-white);
+  opacity: 0.6;
 }
 
 .footer a {

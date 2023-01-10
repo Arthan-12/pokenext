@@ -10,7 +10,7 @@ interface Props {
 
 const NavBar: React.FC<Props> = ({
   appTitle = 'Pokenext',
-  routes = ['pokedex', 'my-team'],
+  routes = ['my-team'],
 }) => {
   return (
     <>
@@ -36,7 +36,7 @@ const NavBar: React.FC<Props> = ({
                   <label className={styles.routeLabel}>{route}</label>
                 </Link>
               ))}
-              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
@@ -48,7 +48,7 @@ const NavBar: React.FC<Props> = ({
                 <NavDropdown.Item href="#action/3.4">
                   Separated link
                 </NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
             </Nav>
           </Navbar.Collapse>
         </Container>

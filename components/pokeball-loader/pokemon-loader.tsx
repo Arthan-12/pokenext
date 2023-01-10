@@ -11,7 +11,7 @@ const PokeballLoader: React.FC = ({}) => {
         alt="pokeball"
         className={styles.container}
       />
-      <label>Buscando Pokémon...</label>
+      <label>Searching for Pokémon...</label>
     </>
   );
 };

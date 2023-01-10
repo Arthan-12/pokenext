@@ -76,7 +76,7 @@ const PokemonSearchInput: React.FC<Props> = ({
           </Form.Group>
           <OverlayTrigger
             placement="right"
-            overlay={<Tooltip id={`tooltip-right`}>Limpar Pesquisa</Tooltip>}
+            overlay={<Tooltip id={`tooltip-right`}>Clear Search</Tooltip>}
           >
             <FontAwesomeIcon
               titleId="close-icon1"

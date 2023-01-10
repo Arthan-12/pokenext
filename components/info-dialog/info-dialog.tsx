@@ -25,7 +25,7 @@ const InfoDialog: React.FC<Props> = ({ info }) => {
     'Placeholders for each search status',
     'Tooltip Helpers',
     'Fixed Info Button + Dialog',
-    'Clickable card with conditional action',
+    'Clickable card with conditional action and validation',
     'Session storage usage to keep the selected items in a session list',
   ];
 

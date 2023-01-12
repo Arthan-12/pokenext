@@ -31,7 +31,7 @@ const PokemonSearchInput: React.FC<Props> = ({
   } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    // console.log(data);
   };
 
   const clear = () => {

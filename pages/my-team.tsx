@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import { Pokemon } from '../models/pokemon-model';
 import { Button } from 'react-bootstrap';
 import PokemonList from '../components/pokemon-list.tsx/pokemon-list';
-import InfoButton from '../components/info-button/info-button';
 import InfoDialog from '../components/info-dialog/info-dialog';
+import { Dropzone } from '../components/multiple-drag-and-drop/dropzone/dropzone';
 
 const initialPokeList: Pokemon[] = [];
 
@@ -22,7 +22,6 @@ export default function MyTeam() {
 
   useEffect(() => {
     setPokemonCapturedList(pokemonList);
-    console.log(pokemonCapturedList);
   }, [JSON.stringify(pokemonList)]);
 
   const clearPokemonList = () => {
@@ -40,7 +39,6 @@ export default function MyTeam() {
     );
     const pokemonSquadList = [...pokemonSquadTeam, ...filteredList];
     setPokemonSquad(pokemonSquadList);
-    console.log(pokemonSquadList);
   };
 
   const removePokemonFromCaptured = (id: number) => {
@@ -108,6 +106,7 @@ export default function MyTeam() {
           </>
         )}
         <InfoDialog info="myTeam" />
+        <Dropzone />
       </main>
 
       <footer className={styles.footer}>

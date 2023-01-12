@@ -25,6 +25,10 @@
   align-items: center;
 }
 
+.buttonLabel {
+  cursor: pointer;
+}
+
 .footer {
   display: flex;
   flex: 1;

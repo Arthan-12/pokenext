@@ -59,6 +59,7 @@ export default function Home() {
     if (clear) {
       setContext(null);
       setSearchedPokemon(null);
+      setValue('');
     }
   };
 
@@ -81,6 +82,7 @@ export default function Home() {
           setSearchedPokemon(null);
           setNotFoundState(true);
           setContext(null);
+          setSearchingState(false);
         });
     }
   };
@@ -96,7 +98,6 @@ export default function Home() {
       }
     }
     setListContext([...pokeList, searchedPokemon]);
-    console.log(listContext);
     const stringPokemonList = JSON.stringify([...pokeList, searchedPokemon]);
     sessionStorage.setItem('pokemonList', stringPokemonList);
     setPokemonCaptureList([...pokeList, searchedPokemon]);
@@ -132,16 +133,20 @@ export default function Home() {
               }}
             >
               <Button
-                variant={inputValue.length === 0 ? 'secondary' : 'success'}
-                style={{ marginRight: '1rem' }}
+                variant={
+                  inputValue.length === 0 || searching ? 'secondary' : 'success'
+                }
+                style={{ marginRight: '1.1rem', padding: '0 2vw' }}
                 onClick={() => search(inputValue)}
-                disabled={inputValue.length === 0}
+                disabled={inputValue.length === 0 || !inputValue || searching}
               >
                 <label className={styles.buttonLabel}>Search Pokemon!</label>
               </Button>
               <Button
-                variant={searchedPokemon ? 'primary' : 'secondary'}
-                style={{ marginLeft: '1rem' }}
+                variant={
+                  searchedPokemon && !searching ? 'primary' : 'secondary'
+                }
+                style={{ marginLeft: '1.1rem', padding: '0 2vw' }}
                 onClick={getSearchedPokemon}
                 disabled={!searchedPokemon}
               >

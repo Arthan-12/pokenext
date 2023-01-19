@@ -6,14 +6,18 @@ import { Pokemon } from '../models/pokemon-model';
 import { Button } from 'react-bootstrap';
 import PokemonList from '../components/pokemon-list.tsx/pokemon-list';
 import InfoDialog from '../components/info-dialog/info-dialog';
-import { Dropzone } from '../components/multiple-drag-and-drop/dropzone/dropzone';
+import Dropzone from '../components/multiple-drag-and-drop/dropzone/dropzone';
+import PokemonSearchInput from '../components/pokemon-search-input/pokemon-search-input';
 
 const initialPokeList: Pokemon[] = [];
 
 export default function MyTeam() {
   const [pokemonCapturedList, setPokemonCapturedList] =
     useState(initialPokeList);
+  const [pokemonFilteredCapturedList, setPokemonFilteredCapturedList] =
+    useState(pokemonCapturedList);
   const [pokemonSquadTeam, setPokemonSquad] = useState(initialPokeList);
+  const [inputValue, setValue] = useState('');
   let pokemonList: Pokemon[] = [];
 
   if (typeof window !== 'undefined') {
@@ -22,6 +26,7 @@ export default function MyTeam() {
 
   useEffect(() => {
     setPokemonCapturedList(pokemonList);
+    setPokemonFilteredCapturedList(pokemonList);
   }, [JSON.stringify(pokemonList)]);
 
   const clearPokemonList = () => {
@@ -55,6 +60,33 @@ export default function MyTeam() {
     setPokemonSquad([]);
   };
 
+  const filterPokemonValue = (inputValue: string) => {
+    setValue(inputValue);
+    console.log(inputValue);
+    let filteredPokemon: Pokemon[] = [];
+    if (inputValue.length > 0) {
+      filteredPokemon = pokemonFilteredCapturedList.filter(
+        (pokemon) =>
+          pokemon.id.toString().includes(inputValue.toLowerCase()) ||
+          pokemon.name.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    } else {
+      filteredPokemon = pokemonCapturedList;
+    }
+    console.log(filteredPokemon);
+    setPokemonFilteredCapturedList(filteredPokemon);
+  };
+
+  const handleKeyUp = (event: any) => {
+    const typedValue = event.target.value;
+    filterPokemonValue(typedValue);
+  };
+
+  const teste = () => {
+    setValue('');
+    setPokemonCapturedList(pokemonCapturedList);
+  };
+
   return (
     <>
       <Navbar />
@@ -66,15 +98,31 @@ export default function MyTeam() {
         ) : (
           <>
             <div className={styles.containerAlt}>
-              <div className={styles.content}>
+              <div className={styles.content} onKeyUp={handleKeyUp}>
                 <p>My Captured Pokémon</p>
-                <PokemonList
-                  key={JSON.stringify(pokemonSquadTeam)}
-                  pokemonSquadList={pokemonSquadTeam}
-                  pokemonList={pokemonCapturedList}
-                  addPokemon={addPokemonToSquad}
-                  removePokemon={removePokemonFromCaptured}
+                <PokemonSearchInput
+                  getTypedValue={filterPokemonValue}
+                  clearSelectedPokemon={teste}
                 />
+
+                {inputValue.length > 0 ? (
+                  <PokemonList
+                    key={JSON.stringify(pokemonFilteredCapturedList)}
+                    pokemonSquadList={pokemonSquadTeam}
+                    pokemonList={pokemonFilteredCapturedList}
+                    addPokemon={addPokemonToSquad}
+                    removePokemon={removePokemonFromCaptured}
+                  />
+                ) : (
+                  <PokemonList
+                    key={JSON.stringify(pokemonSquadTeam)}
+                    pokemonSquadList={pokemonSquadTeam}
+                    pokemonList={pokemonCapturedList}
+                    addPokemon={addPokemonToSquad}
+                    removePokemon={removePokemonFromCaptured}
+                  />
+                )}
+
                 <Button
                   style={{ width: '100%', marginTop: 'auto' }}
                   variant="danger"
@@ -92,7 +140,11 @@ export default function MyTeam() {
                       pokemonSquad={pokemonSquadTeam}
                       updatedPokemonList={updatedPokemonList}
                     ></DragAndDrop>
-                    <Button variant="danger" onClick={clearSquadList}>
+                    <Button
+                      variant="danger"
+                      style={{ marginTop: 'auto' }}
+                      onClick={clearSquadList}
+                    >
                       <label style={{ cursor: 'pointer' }}>Clear List</label>
                     </Button>
                   </>
@@ -102,11 +154,21 @@ export default function MyTeam() {
                   </label>
                 )}
               </div>
+              {/* ONGOING MULTIPLE DND */}
+              {/* <div className={styles.content}>
+                <p>Multiple DnD</p>
+                {pokemonSquadTeam.length > 0 ? (
+                  <>
+                    <Dropzone pokemonList={pokemonSquadTeam} />
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div> */}
             </div>
           </>
         )}
         <InfoDialog info="myTeam" />
-        <Dropzone />
       </main>
 
       <footer className={styles.footer}>

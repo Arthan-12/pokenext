@@ -1,22 +1,62 @@
 import React, { useState } from 'react';
 import { DndContext } from '@dnd-kit/core';
-import { Draggable } from './draggable';
-import { Droppable } from './droppable';
+import { Draggable } from '../draggable/draggable';
+import { Droppable } from '../droppable/droppable';
+import { Pokemon } from '../../../models/pokemon-model';
+import PokemonDropListItem from '../../pokemon-drop-list-item/pokemon-drop-list-item';
+import styles from './dropzone.module.css';
 
-export function Dropzone() {
-  const containers = ['A', 'B', 'C'];
+interface Props {
+  pokemonList: Pokemon[];
+}
+
+const Dropzone: React.FC<Props> = ({ pokemonList }) => {
+  const containers = ['A', 'B'];
   const [parent, setParent] = useState(null);
-  const draggableMarkup = <Draggable id="draggable">Drag me</Draggable>;
+
+  const removePokemon = (id: number) => {
+    // const filteredPokemonList: Pokemon[] = itemList.filter(
+    //   (pokemon) => pokemon.id !== id
+    // );
+    // setItemList(filteredPokemonList);
+    // updatedPokemonList(filteredPokemonList);
+    console.log(id);
+  };
 
   return (
     <DndContext onDragEnd={handleDragEnd} id={'DndContext0'}>
-      {parent === null ? draggableMarkup : null}
-
+      {parent === null ? (
+        <>
+          {pokemonList?.map((pokemon, index) => (
+            <Draggable id={pokemon.id} key={pokemon.id}>
+              <PokemonDropListItem
+                pokemon={pokemon}
+                removePokemon={() => removePokemon(pokemon.id)}
+              />
+            </Draggable>
+          ))}
+        </>
+      ) : null}
       {containers.map((id) => (
         // We updated the Droppable component so it would accept an `id`
         // prop and pass it to `useDroppable`
         <Droppable key={id} id={id}>
-          {parent === id ? draggableMarkup : 'Drop here'}
+          {parent === id ? (
+            <>
+              {/* {pokemonList?.map((pokemon, index) => (
+                <Draggable id={pokemon.id} key={pokemon.id}>
+                  <PokemonDropListItem
+                    pokemon={pokemon}
+                    removePokemon={() => removePokemon(pokemon.id)}
+                  />
+                </Draggable>
+              ))} */}
+            </>
+          ) : (
+            <div className={styles.dropContainer}>
+              <label>Dropzone {id}</label>
+            </div>
+          )}
         </Droppable>
       ))}
     </DndContext>
@@ -29,4 +69,6 @@ export function Dropzone() {
     // otherwise reset the parent to `null`
     setParent(over ? over.id : null);
   }
-}
+};
+
+export default Dropzone;

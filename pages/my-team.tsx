@@ -8,6 +8,7 @@ import PokemonList from '../components/pokemon-list.tsx/pokemon-list';
 import InfoDialog from '../components/info-dialog/info-dialog';
 import Dropzone from '../components/multiple-drag-and-drop/dropzone/dropzone';
 import PokemonSearchInput from '../components/pokemon-search-input/pokemon-search-input';
+import PokemonFilter from '../components/pokemon-filter/pokemon-filter';
 
 const initialPokeList: Pokemon[] = [];
 
@@ -18,6 +19,7 @@ export default function MyTeam() {
     useState(pokemonCapturedList);
   const [pokemonSquadTeam, setPokemonSquad] = useState(initialPokeList);
   const [inputValue, setValue] = useState('');
+  const [selectedPokemonTypes, setSelectedTypes] = useState([]);
   let pokemonList: Pokemon[] = [];
 
   if (typeof window !== 'undefined') {
@@ -77,9 +79,37 @@ export default function MyTeam() {
     setPokemonFilteredCapturedList(filteredPokemon);
   };
 
+  const filterPokemonByType = (selectedTypes: string[]) => {
+    let filteredPokemon: Pokemon[] = [];
+    if (selectedTypes.length > 0) {
+      pokemonCapturedList.forEach((pokemon) =>
+        pokemon.types.forEach((pokemonType) => {
+          if (selectedTypes.includes(pokemonType.type.name)) {
+            filteredPokemon = [...filteredPokemon, pokemon];
+          } else {
+            return;
+          }
+        })
+      );
+    } else {
+      filteredPokemon = pokemonCapturedList;
+    }
+    filteredPokemon = filteredPokemon.filter((pokemon, index) => {
+      return filteredPokemon.indexOf(pokemon) === index;
+    });
+    console.log(filteredPokemon);
+    setSelectedTypes(selectedTypes);
+    setPokemonFilteredCapturedList(filteredPokemon);
+  };
+
   const handleKeyUp = (event: any) => {
     const typedValue = event.target.value;
     filterPokemonValue(typedValue);
+  };
+
+  const getSelectedTypes = (selectedTypes: string[]) => {
+    console.log(selectedTypes);
+    filterPokemonByType(selectedTypes);
   };
 
   const teste = () => {
@@ -104,8 +134,11 @@ export default function MyTeam() {
                   getTypedValue={filterPokemonValue}
                   clearSelectedPokemon={teste}
                 />
-
-                {inputValue.length > 0 ? (
+                <PokemonFilter
+                  pokemonList={pokemonCapturedList}
+                  getSelectedTypes={getSelectedTypes}
+                />
+                {inputValue.length > 0 || selectedPokemonTypes.length > 0 ? (
                   <PokemonList
                     key={JSON.stringify(pokemonFilteredCapturedList)}
                     pokemonSquadList={pokemonSquadTeam}

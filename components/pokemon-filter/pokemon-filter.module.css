@@ -1,0 +1,33 @@
+.typeContainer {
+  max-width: 420px;
+  height: 20vh;
+  display: flex;
+  flex-wrap: wrap;
+  transition: width 1s;
+  white-space: nowrap;
+  overflow-y: auto;
+}
+
+.hiddenTypeContainer {
+  visibility: hidden;
+}
+
+.typeContent {
+  max-width: 90px;
+  margin: 0 3px;
+}
+
+.typeButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.typeButton:hover {
+  cursor: pointer;
+  color: var(--pokeball-white);
+  background-color: var(--bg-blue-hover);
+}

@@ -1,26 +1,124 @@
-import { Dropdown } from 'react-bootstrap';
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
 import { Pokemon } from '../../models/pokemon-model';
+import { Checkbox } from '../checkbox/checkbox';
+import PokemonTypeBadge from '../pokemon-type-badge/pokemon-type-badge';
+import styles from './pokemon-filter.module.css';
 
 interface Props {
   pokemonList: Pokemon[];
+  getSelectedTypes: (value: any[]) => void;
 }
 
-function PokemonFilter({ pokemonList: [] }: Props) {
+const pokemonTypes = [
+  { type: 'normal', checked: false },
+  { type: 'fire', checked: false },
+  { type: 'water', checked: false },
+  { type: 'grass', checked: false },
+  { type: 'flying', checked: false },
+  { type: 'fighting', checked: false },
+  { type: 'poison', checked: false },
+  { type: 'electric', checked: false },
+  { type: 'ground', checked: false },
+  { type: 'rock', checked: false },
+  { type: 'psychic', checked: false },
+  { type: 'ice', checked: false },
+  { type: 'bug', checked: false },
+  { type: 'ghost', checked: false },
+  { type: 'steel', checked: false },
+  { type: 'dragon', checked: false },
+  { type: 'dark', checked: false },
+  { type: 'fairy', checked: false },
+];
+
+const PokemonFilter: React.FC<Props> = ({
+  pokemonList = [],
+  getSelectedTypes,
+}) => {
+  const [showTypes, toggleShowTypes] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+
+  useEffect(() => {
+    // console.log(selectedTypes);
+  });
+
+  const handleChange = (e) => {
+    // Destructuring
+    const { value, checked } = e.target;
+    let array = [];
+    if (checked) {
+      array = [...selectedTypes, value];
+    } else {
+      array = selectedTypes.filter((e) => e !== value);
+    }
+    setSelectedTypes(array);
+    getSelectedTypes(array);
+  };
+
+  const toggleShowTypesContainer = () => {
+    toggleShowTypes(!showTypes);
+  };
+
+  const disablePokemonType = (filterType: string) => {
+    let isDisabled: boolean;
+    let pokemonTypeList: string[] = [];
+    pokemonList.forEach((pokemon) => {
+      pokemon.types.forEach(
+        (type) => (pokemonTypeList = [...pokemonTypeList, type.type.name])
+      );
+    });
+    const pokemonFilteredTypeList = pokemonTypeList.filter((element, index) => {
+      return pokemonTypeList.indexOf(element) === index;
+    });
+    pokemonFilteredTypeList.includes(filterType)
+      ? (isDisabled = false)
+      : (isDisabled = true);
+    return isDisabled;
+  };
+
   return (
     <>
-      <Dropdown className="d-inline mx-2" autoClose={false}>
-        <Dropdown.Toggle variant="success" id="dropdown-autoclose-false">
-          Filtrar por tipo
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+      <div className={styles.typeButton} onClick={toggleShowTypesContainer}>
+        <span>Filter by type</span>
+        {!showTypes ? (
+          <FontAwesomeIcon
+            titleId="arrow-icon1"
+            fontSize="16"
+            color="#3b4cca"
+            cursor="pointer"
+            icon={faCaretDown}
+          />
+        ) : (
+          <FontAwesomeIcon
+            titleId="arrow-icon1"
+            fontSize="16"
+            color="#3b4cca"
+            cursor="pointer"
+            icon={faCaretUp}
+          />
+        )}
+      </div>
+      {showTypes ? (
+        <div className={styles.typeContainer}>
+          {pokemonTypes.map((type, index) => (
+            <div className={styles.typeContent} key={index}>
+              <input
+                type="checkbox"
+                onChange={handleChange}
+                disabled={disablePokemonType(type.type)}
+                value={type.type}
+                checked={selectedTypes.includes(type.type)}
+              />
+              <PokemonTypeBadge pokemonType={type.type} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
-}
+};
 
 export default PokemonFilter;

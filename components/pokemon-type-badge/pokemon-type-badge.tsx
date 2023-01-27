@@ -21,14 +21,24 @@ const PokemonTypeBadge: React.FC<Props> = ({ pokemonType = '' }) => {
       currentBadgeColor = 'danger';
     } else if (pokemonType === 'water' || pokemonType === 'ice') {
       currentBadgeColor = 'info';
-    } else if (pokemonType === 'grass') {
+    } else if (pokemonType === 'grass' || pokemonType === 'bug') {
       currentBadgeColor = 'success';
-    } else if (pokemonType === 'dragon' || pokemonType === 'ground') {
+    } else if (
+      pokemonType === 'dragon' ||
+      pokemonType === 'ground' ||
+      pokemonType === 'steel'
+    ) {
       currentBadgeColor = 'secondary';
-    } else if (pokemonType === 'dark' || pokemonType === 'rock') {
+    } else if (
+      pokemonType === 'dark' ||
+      pokemonType === 'rock' ||
+      pokemonType === 'ghost'
+    ) {
       currentBadgeColor = 'dark';
     } else if (pokemonType === 'electric' || pokemonType === 'fighting') {
       currentBadgeColor = 'warning';
+    } else {
+      currentBadgeColor = 'primary';
     }
     return setBadgeColor(currentBadgeColor);
   };

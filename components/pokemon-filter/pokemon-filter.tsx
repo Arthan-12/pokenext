@@ -36,6 +36,8 @@ const PokemonFilter: React.FC<Props> = ({
   pokemonList = [],
   getSelectedTypes,
 }) => {
+  const [unavailableTypeDisplay, toggleUnavailableTypeDisplay] =
+    useState(false);
   const [showTypes, toggleShowTypes] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState([]);
 
@@ -54,6 +56,10 @@ const PokemonFilter: React.FC<Props> = ({
     }
     setSelectedTypes(array);
     getSelectedTypes(array);
+  };
+
+  const handleDisplayChange = () => {
+    toggleUnavailableTypeDisplay(!unavailableTypeDisplay);
   };
 
   const toggleShowTypesContainer = () => {
@@ -100,20 +106,41 @@ const PokemonFilter: React.FC<Props> = ({
         )}
       </div>
       {showTypes ? (
-        <div className={styles.typeContainer}>
-          {pokemonTypes.map((type, index) => (
-            <div className={styles.typeContent} key={index}>
-              <input
-                type="checkbox"
-                onChange={handleChange}
-                disabled={disablePokemonType(type.type)}
-                value={type.type}
-                checked={selectedTypes.includes(type.type)}
-              />
-              <PokemonTypeBadge pokemonType={type.type} />
-            </div>
-          ))}
-        </div>
+        <>
+          <div style={{ paddingLeft: '3px', paddingBottom: '4px' }}>
+            <input
+              checked={unavailableTypeDisplay}
+              type="checkbox"
+              onChange={handleDisplayChange}
+            />
+            <span style={{ paddingLeft: '8px' }}>
+              Hide unavailable type options
+            </span>
+          </div>
+          <div className={styles.typeContainer}>
+            {pokemonTypes.map((type, index) => (
+              <div key={index}>
+                {disablePokemonType(type.type) && unavailableTypeDisplay ? (
+                  <></>
+                ) : (
+                  <div className={styles.typeContent}>
+                    <input
+                      type="checkbox"
+                      onChange={handleChange}
+                      disabled={disablePokemonType(type.type)}
+                      value={type.type}
+                      checked={selectedTypes.includes(type.type)}
+                    />
+                    <PokemonTypeBadge
+                      pokemonType={type.type}
+                      disabled={disablePokemonType(type.type)}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
       ) : (
         <></>
       )}

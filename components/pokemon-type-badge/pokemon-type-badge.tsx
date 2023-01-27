@@ -4,9 +4,13 @@ import { Badge } from 'react-bootstrap';
 interface Props {
   pokemonType?: string;
   display?: 'horizontal' | 'vertical';
+  disabled?: boolean;
 }
 
-const PokemonTypeBadge: React.FC<Props> = ({ pokemonType = '' }) => {
+const PokemonTypeBadge: React.FC<Props> = ({
+  pokemonType = '',
+  disabled = false,
+}) => {
   const [badgeColor, setBadgeColor] = useState('warning');
 
   useEffect(() => {
@@ -46,7 +50,11 @@ const PokemonTypeBadge: React.FC<Props> = ({ pokemonType = '' }) => {
     <>
       <Badge
         bg={badgeColor}
-        style={{ margin: '0.5rem', textTransform: 'uppercase' }}
+        style={{
+          margin: '0.5rem',
+          textTransform: 'uppercase',
+          opacity: disabled ? '0.3' : '1.0',
+        }}
       >
         {pokemonType}
       </Badge>

@@ -1,6 +1,5 @@
 .typeContainer {
   max-width: 420px;
-  height: 20vh;
   display: flex;
   flex-wrap: wrap;
   transition: width 1s;

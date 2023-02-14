@@ -27,6 +27,7 @@
 
 .buttonLabel {
   cursor: pointer;
+  color: var(--pokeball-white);
 }
 
 .footer {

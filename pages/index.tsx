@@ -15,6 +15,7 @@ import React from 'react';
 import PokemonListContext from '../contexts/pokemon-list-context';
 import PokemonContext from '../contexts/pokemon-context';
 import InfoDialog from '../components/info-dialog/info-dialog';
+import Link from 'next/link';
 
 const initialPokeList: Pokemon[] = [];
 
@@ -40,6 +41,9 @@ export default function Home() {
 
   const getSearchedPokemon = () => {
     console.log(searchedPokemon);
+    console.log(context);
+    const stringPokemonDetails = JSON.stringify(searchedPokemon);
+    sessionStorage.setItem('pokemonDetails', stringPokemonDetails);
   };
 
   const selectPokemon = () => {
@@ -150,7 +154,19 @@ export default function Home() {
                 onClick={getSearchedPokemon}
                 disabled={!searchedPokemon}
               >
-                <label className={styles.buttonLabel}>Get Pokemon Info</label>
+                {searchedPokemon ? (
+                  <Link
+                    href={{
+                      pathname: `pokemon-details/id=${searchedPokemon.id}`,
+                    }}
+                  >
+                    <label className={styles.buttonLabel}>
+                      Get Pokemon Info
+                    </label>
+                  </Link>
+                ) : (
+                  <label className={styles.buttonLabel}>Get Pokemon Info</label>
+                )}
               </Button>
             </Container>
 
@@ -175,6 +191,7 @@ export default function Home() {
             )}
             {notFound ? <NotFoundPokemon /> : <></>}
             {searching && !notFound ? <PokemonLoader /> : <></>}
+
             {selectedCard && searchedPokemon ? (
               <Button variant="light" className="mt-3" onClick={catchPokemon}>
                 Catch Pokémon!

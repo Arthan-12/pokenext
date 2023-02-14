@@ -39,7 +39,7 @@ const PokemonList: React.FC<Props> = ({
 
   return (
     <>
-      <ListGroup as="ul" style={{ borderRadius: '8px' }}>
+      <ListGroup as="ul" style={{ borderRadius: '8px', cursor: 'pointer' }}>
         {pokemonList.map((pokemon, index) => (
           <div key={pokemon.id} className={styles.listItem}>
             {currentIndex === index && !disablePokemon(pokemon.id) ? (

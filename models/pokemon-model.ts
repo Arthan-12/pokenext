@@ -6,4 +6,5 @@ export interface Pokemon {
   weight?: number;
   height?: number;
   order?: number;
+  stats?: any[];
 }

@@ -9,6 +9,7 @@ import InfoDialog from '../components/info-dialog/info-dialog';
 import Dropzone from '../components/multiple-drag-and-drop/dropzone/dropzone';
 import PokemonSearchInput from '../components/pokemon-search-input/pokemon-search-input';
 import PokemonFilter from '../components/pokemon-filter/pokemon-filter';
+import PokemonOrderBy from '../components/pokemon-order-by/pokemon-order-by';
 
 const initialPokeList: Pokemon[] = [];
 
@@ -20,6 +21,7 @@ export default function MyTeam() {
   const [pokemonSquadTeam, setPokemonSquad] = useState(initialPokeList);
   const [inputValue, setValue] = useState('');
   const [selectedPokemonTypes, setSelectedTypes] = useState([]);
+  const [orderBy, setOrderBy] = useState(null);
   let pokemonList: Pokemon[] = [];
 
   if (typeof window !== 'undefined') {
@@ -112,9 +114,16 @@ export default function MyTeam() {
     filterPokemonByType(selectedTypes);
   };
 
-  const teste = () => {
+  const getOrderedPokemonList = (pokemonOrderedList: any) => {
+    console.log(pokemonOrderedList);
+    setPokemonFilteredCapturedList(pokemonOrderedList.pokemonList);
+    setOrderBy(pokemonOrderedList.orderBy);
+  };
+
+  const clearInputFilter = () => {
     setValue('');
     setPokemonCapturedList(pokemonCapturedList);
+    setPokemonFilteredCapturedList(pokemonCapturedList);
   };
 
   return (
@@ -132,13 +141,19 @@ export default function MyTeam() {
                 <p>My Captured Pokémon</p>
                 <PokemonSearchInput
                   getTypedValue={filterPokemonValue}
-                  clearSelectedPokemon={teste}
+                  clearSelectedPokemon={clearInputFilter}
                 />
                 <PokemonFilter
                   pokemonList={pokemonCapturedList}
                   getSelectedTypes={getSelectedTypes}
                 />
-                {inputValue.length > 0 || selectedPokemonTypes.length > 0 ? (
+                <PokemonOrderBy
+                  getOrderedPokemonList={getOrderedPokemonList}
+                  pokemonList={pokemonCapturedList}
+                />
+                {inputValue.length > 0 ||
+                selectedPokemonTypes.length > 0 ||
+                orderBy ? (
                   <PokemonList
                     key={JSON.stringify(pokemonFilteredCapturedList)}
                     pokemonSquadList={pokemonSquadTeam}

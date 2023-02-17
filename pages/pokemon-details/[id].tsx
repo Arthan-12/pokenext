@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/navbar';
-import PokemonCard from '../../components/pokemon-card/pokemon-card';
+import PokemonDetailCard from '../../components/pokemon-detail-card/pokemon-detail-card';
 import { Pokemon } from '../../models/pokemon-model';
 import styles from '../../styles/Home.module.css';
 
@@ -18,16 +18,18 @@ export default function PokemonDetail() {
     setPokemonDetails(initialPokemonDetails);
   }, [JSON.stringify(initialPokemonDetails)]);
 
+  const teste = () => {
+    console.log('oe oe');
+  };
+
   return (
     <>
       <Navbar />
       <main className={styles.main}>
         {pokemonDetails ? (
-          <PokemonCard
-            selected={false}
-            onClick={() => 'teste'}
-            pokemon={pokemonDetails}
-          />
+          <>
+            <PokemonDetailCard pokemon={pokemonDetails} />
+          </>
         ) : (
           <></>
         )}

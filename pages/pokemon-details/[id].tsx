@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/navbar';
 import PokemonDetailCard from '../../components/pokemon-detail-card/pokemon-detail-card';
@@ -6,6 +7,8 @@ import styles from '../../styles/Home.module.css';
 
 export default function PokemonDetail() {
   const [pokemonDetails, setPokemonDetails] = useState(null);
+  const [routeId, setRouteId] = useState(null);
+  const route = useRouter();
   let initialPokemonDetails: Pokemon = null;
 
   if (typeof window !== 'undefined') {
@@ -16,22 +19,36 @@ export default function PokemonDetail() {
 
   useEffect(() => {
     setPokemonDetails(initialPokemonDetails);
+    getPokemonId(initialPokemonDetails);
   }, [JSON.stringify(initialPokemonDetails)]);
 
-  const teste = () => {
-    console.log('oe oe');
+  const getPokemonId = (initialPokemonDetails) => {
+    if (route.query.id) {
+      const stringRouteId = route.query.id.toString().split('=');
+      setRouteId(stringRouteId[1]);
+    }
+  };
+
+  const checkRouteId = () => {
+    if (routeId === pokemonDetails.id.toString()) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
     <>
       <Navbar />
       <main className={styles.main}>
-        {pokemonDetails ? (
+        {pokemonDetails && checkRouteId() ? (
           <>
             <PokemonDetailCard pokemon={pokemonDetails} />
           </>
         ) : (
-          <></>
+          <>
+            <p>There's nothing here</p>
+          </>
         )}
       </main>
     </>

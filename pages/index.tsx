@@ -26,9 +26,9 @@ export default function Home() {
   const [selectedCard, toggleSelected] = useState(false);
   const [showSuccesToast, setSuccesToast] = useState(false);
   const [showErrorToast, setErrorToast] = useState(false);
-  const [searchedPokemon, setSearchedPokemon] = useState(null);
   const [notFound, setNotFoundState] = useState(false);
   const [searching, setSearchingState] = useState(false);
+  const [searchedPokemon, setSearchedPokemon] = useState(null);
 
   const [listContext, setListContext] = useState<Pokemon[] | null>([]);
   const [context, setContext] = useState<Pokemon | null>(null);

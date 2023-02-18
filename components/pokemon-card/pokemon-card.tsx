@@ -35,14 +35,6 @@ const PokemonCard: React.FC<Props> = ({
           {pokemon!.name}
         </Card.Title>
       </Card.Header>
-      <Card.Body>
-        <Card.Text>
-          Height: <span style={{ color: '#121212' }}>{pokemon?.height}</span>
-        </Card.Text>
-        <Card.Text>
-          Weight: <span style={{ color: '#121212' }}>{pokemon?.weight}</span>
-        </Card.Text>
-      </Card.Body>
       <Card.Footer style={{ display: 'flex', justifyContent: 'center' }}>
         {pokemon!.types?.map((pokemonType, index) => (
           <PokemonTypeBadge

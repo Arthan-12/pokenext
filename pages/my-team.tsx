@@ -10,6 +10,7 @@ import Dropzone from '../components/multiple-drag-and-drop/dropzone/dropzone';
 import PokemonSearchInput from '../components/pokemon-search-input/pokemon-search-input';
 import PokemonFilter from '../components/pokemon-filter/pokemon-filter';
 import PokemonOrderBy from '../components/pokemon-order-by/pokemon-order-by';
+import ConfirmDialog from '../components/confirm-dialog/confirm-dialog';
 
 const initialPokeList: Pokemon[] = [];
 
@@ -22,6 +23,8 @@ export default function MyTeam() {
   const [inputValue, setValue] = useState('');
   const [selectedPokemonTypes, setSelectedTypes] = useState([]);
   const [orderBy, setOrderBy] = useState(null);
+  const [confirmDialogShow, setDialogShow] = useState(false);
+  const [deletePokemonList, setDeletePokemonList] = useState(false);
   let pokemonList: Pokemon[] = [];
 
   if (typeof window !== 'undefined') {
@@ -33,9 +36,18 @@ export default function MyTeam() {
     setPokemonFilteredCapturedList(pokemonList);
   }, [JSON.stringify(pokemonList)]);
 
-  const clearPokemonList = () => {
-    setPokemonCapturedList([]);
-    sessionStorage.setItem('pokemonList', null);
+  // const clearPokemonList = () => {
+  //   setPokemonCapturedList([]);
+  //   sessionStorage.setItem('pokemonList', null);
+  // };
+
+  const deleteConfirmation = (confirm?: boolean) => {
+    if (confirm) {
+      setPokemonCapturedList([]);
+      sessionStorage.setItem('pokemonList', null);
+      setDeletePokemonList(false);
+    }
+    setDialogShow(false);
   };
 
   const updatedPokemonList = (filteredPokemonList: Pokemon[]) => {
@@ -174,10 +186,16 @@ export default function MyTeam() {
                 <Button
                   style={{ width: '100%', marginTop: 'auto' }}
                   variant="danger"
-                  onClick={clearPokemonList}
+                  onClick={() => setDialogShow(true)}
                 >
                   <label style={{ cursor: 'pointer' }}>Clear List</label>
                 </Button>
+                <ConfirmDialog
+                  dialogText="Do you really want to delete this list?"
+                  dialogSubtext="This process is irreversible and all your Pokémon will be lost"
+                  show={confirmDialogShow}
+                  confirmAction={deleteConfirmation}
+                />
               </div>
               <div className={styles.content}>
                 <p>My Pokémon Squad!</p>

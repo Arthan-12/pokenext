@@ -128,19 +128,12 @@ export default function Home() {
               getTypedValue={getTypedValue}
               clearSelectedPokemon={clearSelectedPokemon}
             />
-            <Container
-              style={{
-                marginBottom: '2rem',
-                display: 'flex',
-                justifyContent: 'center',
-                width: '22vw',
-              }}
-            >
+            <Container className={styles.buttonContainer}>
               <Button
                 variant={
                   inputValue.length === 0 || searching ? 'secondary' : 'success'
                 }
-                style={{ marginRight: '1.1rem', padding: '0 2vw' }}
+                className={styles.button}
                 onClick={() => search(inputValue)}
                 disabled={inputValue.length === 0 || !inputValue || searching}
               >
@@ -150,7 +143,7 @@ export default function Home() {
                 variant={
                   searchedPokemon && !searching ? 'primary' : 'secondary'
                 }
-                style={{ marginLeft: '1.1rem', padding: '0 2vw' }}
+                className={styles.button}
                 onClick={getSearchedPokemon}
                 disabled={!searchedPokemon}
               >
@@ -193,7 +186,11 @@ export default function Home() {
             {searching && !notFound ? <PokemonLoader /> : <></>}
 
             {selectedCard && searchedPokemon ? (
-              <Button variant="light" className="mt-3" onClick={catchPokemon}>
+              <Button
+                variant="flat"
+                className={`${styles.catchPokemonBtn} mt-3`}
+                onClick={catchPokemon}
+              >
                 Catch Pokémon!
               </Button>
             ) : null}

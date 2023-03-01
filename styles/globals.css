@@ -39,6 +39,11 @@ a {
   box-sizing: border-box;
 }
 
+.carousel-indicators {
+  background-color: var(--bg-blue);
+  border-radius: 8px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -54,6 +59,18 @@ a {
     background-image: url('../public/img/pokemon_bg_square.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
+  }
+
+  .carousel-indicators {
+    visibility: hidden;
+  }
+
+  .carousel-caption {
+    visibility: hidden;
+  }
+
+  .slide {
+    width: 60%;
   }
 }
 

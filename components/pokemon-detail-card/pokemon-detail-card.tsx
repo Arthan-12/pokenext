@@ -136,6 +136,19 @@ const PokemonDetailCard = ({ pokemon }: Props) => {
     setSuccesToast(true);
   };
 
+  const imageSubtitle = (index) => {
+    let subtitleText: string;
+    if (index === 0) {
+      return (subtitleText = `${pokemon.name} front view`);
+    } else if (index === 1) {
+      return (subtitleText = `${pokemon.name} back view`);
+    } else if (index === 2) {
+      return (subtitleText = `shiny ${pokemon.name} front view`);
+    } else if (index === 3) {
+      return (subtitleText = `shiny ${pokemon.name} front view`);
+    }
+  };
+
   return (
     <>
       <Card>
@@ -165,21 +178,27 @@ const PokemonDetailCard = ({ pokemon }: Props) => {
         </Card.Header>
         <Card.Body className={styles.cardBody}>
           <Carousel
-            fade
+            keyboard={true}
             activeIndex={carouselIndex}
             onSelect={handleSelect}
             interval={null}
             prevIcon={
-              <span style={{ color: '#3b4cca' }}>
+              <span
+                className={styles.carouselPrevChevron}
+                style={{ color: '#3b4cca' }}
+              >
                 <FontAwesomeIcon fontSize="18" icon={faChevronLeft} />
               </span>
             }
             nextIcon={
-              <span style={{ color: '#3b4cca' }}>
+              <span
+                className={styles.carouselNextChevron}
+                style={{ color: '#3b4cca' }}
+              >
                 <FontAwesomeIcon fontSize="18" icon={faChevronRight} />
               </span>
             }
-            style={{ width: '40%' }}
+            className={styles.carouselContainer}
           >
             {pokemonImageList.map((image, index) => (
               <Carousel.Item key={index}>
@@ -188,6 +207,11 @@ const PokemonDetailCard = ({ pokemon }: Props) => {
                   variant="top"
                   src={pokemonImageList[index]}
                 />
+                <Carousel.Caption>
+                  <label style={{ color: '#3b4cca' }}>
+                    {imageSubtitle(index)}
+                  </label>
+                </Carousel.Caption>
               </Carousel.Item>
             ))}
           </Carousel>

@@ -21,10 +21,11 @@
 }
 
 .imageContainer {
-  width: 100%;
-  height: 100%;
-  max-width: 480px;
-  max-height: 480px;
+  padding: 20%;
+}
+
+.carouselContainer {
+  width: 40%;
 }
 
 .tabItem a {
@@ -36,6 +37,22 @@
     display: flex;
     flex-direction: column;
     width: 500px;
+  }
+
+  .carouselContainer {
+    width: 80%;
+  }
+
+  .imageContainer {
+    padding: 10px;
+  }
+
+  .carouselPrevChevron {
+    padding: -70px;
+  }
+
+  .carouselNextChevron {
+    padding: -70px;
   }
 }
 

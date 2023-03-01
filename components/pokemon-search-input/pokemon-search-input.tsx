@@ -56,10 +56,7 @@ const PokemonSearchInput: React.FC<Props> = ({
     <div>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.container}>
-          <Form.Group
-            className="mb-3"
-            style={{ width: '18.5vw', height: '72px' }}
-          >
+          <Form.Group className="mb-3" style={{ width: '100%' }}>
             <Form.Label className={styles.inputLabel}>
               Search for a Pokémon!
             </Form.Label>
@@ -68,15 +65,16 @@ const PokemonSearchInput: React.FC<Props> = ({
               height={95}
               isInvalid={errors.searchInput ? true : false}
               type="text"
+              placeholder="Type a pokemon name or id"
               {...register('searchInput', { required: required })}
             />
-            <Form.Control.Feedback type="invalid">
+            {/* <Form.Control.Feedback type="invalid">
               field is required
-            </Form.Control.Feedback>
+            </Form.Control.Feedback> */}
           </Form.Group>
           <OverlayTrigger
-            placement="right"
-            overlay={<Tooltip id={`tooltip-right`}>Clear Search</Tooltip>}
+            placement="top"
+            overlay={<Tooltip id={`tooltip-top`}>Clear Search</Tooltip>}
           >
             <FontAwesomeIcon
               titleId="close-icon1"

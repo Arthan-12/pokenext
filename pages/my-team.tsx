@@ -78,7 +78,6 @@ export default function MyTeam() {
 
   const filterPokemonValue = (inputValue: string) => {
     setValue(inputValue);
-    console.log(inputValue);
     let filteredPokemon: Pokemon[] = [];
     if (inputValue.length > 0) {
       filteredPokemon = pokemonFilteredCapturedList.filter(
@@ -89,7 +88,6 @@ export default function MyTeam() {
     } else {
       filteredPokemon = pokemonCapturedList;
     }
-    console.log(filteredPokemon);
     setPokemonFilteredCapturedList(filteredPokemon);
   };
 
@@ -111,7 +109,6 @@ export default function MyTeam() {
     filteredPokemon = filteredPokemon.filter((pokemon, index) => {
       return filteredPokemon.indexOf(pokemon) === index;
     });
-    console.log(filteredPokemon);
     setSelectedTypes(selectedTypes);
     setPokemonFilteredCapturedList(filteredPokemon);
   };
@@ -122,12 +119,10 @@ export default function MyTeam() {
   };
 
   const getSelectedTypes = (selectedTypes: string[]) => {
-    console.log(selectedTypes);
     filterPokemonByType(selectedTypes);
   };
 
   const getOrderedPokemonList = (pokemonOrderedList: any) => {
-    console.log(pokemonOrderedList);
     setPokemonFilteredCapturedList(pokemonOrderedList.pokemonList);
     setOrderBy(pokemonOrderedList.orderBy);
   };

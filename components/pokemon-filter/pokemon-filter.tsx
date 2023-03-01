@@ -41,10 +41,6 @@ const PokemonFilter: React.FC<Props> = ({
   const [showTypes, toggleShowTypes] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState([]);
 
-  useEffect(() => {
-    // console.log(selectedTypes);
-  });
-
   const handleChange = (e) => {
     // Destructuring
     const { value, checked } = e.target;

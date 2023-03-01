@@ -40,8 +40,6 @@ export default function Home() {
   };
 
   const getSearchedPokemon = () => {
-    console.log(searchedPokemon);
-    console.log(context);
     const stringPokemonDetails = JSON.stringify(searchedPokemon);
     sessionStorage.setItem('pokemonDetails', stringPokemonDetails);
   };

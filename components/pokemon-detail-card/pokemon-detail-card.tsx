@@ -68,7 +68,6 @@ const PokemonDetailCard = ({ pokemon }: Props) => {
     setPokemonStatsList(builtPokemonStatsList);
     getMaxStat(builtPokemonStatsList);
     getMinStat(builtPokemonStatsList);
-    console.log(builtPokemonStatsList);
   };
 
   const getMaxStat = (pokemonStatList: PokemonStats[]) => {

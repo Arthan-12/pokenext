@@ -48,6 +48,11 @@ export default function Home() {
 
   const selectPokemon = () => {
     toggleSelected(!selectedCard);
+    const element = document.getElementById('pokemonCard');
+    element.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth',
+    });
   };
 
   const handleKeyUp = (event: any) => {
@@ -164,11 +169,13 @@ export default function Home() {
             </Container>
 
             {searchedPokemon && !searching ? (
-              <PokemonCard
-                selected={selectedCard}
-                onClick={selectPokemon}
-                pokemon={searchedPokemon}
-              />
+              <section id="pokemonCard">
+                <PokemonCard
+                  selected={selectedCard}
+                  onClick={selectPokemon}
+                  pokemon={searchedPokemon}
+                />
+              </section>
             ) : (
               <></>
             )}

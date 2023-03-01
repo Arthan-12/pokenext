@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.css';
+import styles from '../styles/Pages.module.css';
 import Navbar from '../components/navbar/navbar';
 import DragAndDrop from '../components/drag-and-drop/drag-and-drop';
 import { useState, useEffect } from 'react';
@@ -15,6 +15,7 @@ import ConfirmDialog from '../components/confirm-dialog/confirm-dialog';
 const initialPokeList: Pokemon[] = [];
 
 export default function MyTeam() {
+  // HOOK ZONE
   const [pokemonCapturedList, setPokemonCapturedList] =
     useState(initialPokeList);
   const [pokemonFilteredCapturedList, setPokemonFilteredCapturedList] =
@@ -26,6 +27,8 @@ export default function MyTeam() {
   const [confirmDialogShow, setDialogShow] = useState(false);
   const [deletePokemonList, setDeletePokemonList] = useState(false);
   let pokemonList: Pokemon[] = [];
+
+  // PAGE INIT ZONE
 
   if (typeof window !== 'undefined') {
     pokemonList = JSON.parse(sessionStorage.getItem('pokemonList'));
@@ -40,6 +43,8 @@ export default function MyTeam() {
   //   setPokemonCapturedList([]);
   //   sessionStorage.setItem('pokemonList', null);
   // };
+
+  // FUNCTIONS ZONE
 
   const deleteConfirmation = (confirm?: boolean) => {
     if (confirm) {

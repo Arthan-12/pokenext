@@ -3,13 +3,16 @@ import { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/navbar';
 import PokemonDetailCard from '../../components/pokemon-detail-card/pokemon-detail-card';
 import { Pokemon } from '../../models/pokemon-model';
-import styles from '../../styles/Home.module.css';
+import styles from '../../styles/Pages.module.css';
 
 export default function PokemonDetail() {
+  // HOOK ZONE
   const [pokemonDetails, setPokemonDetails] = useState(null);
   const [routeId, setRouteId] = useState(null);
   const route = useRouter();
   let initialPokemonDetails: Pokemon = null;
+
+  // PAGE INIT ZONE
 
   if (typeof window !== 'undefined') {
     initialPokemonDetails = JSON.parse(
@@ -21,6 +24,8 @@ export default function PokemonDetail() {
     setPokemonDetails(initialPokemonDetails);
     getPokemonId(initialPokemonDetails);
   }, [JSON.stringify(initialPokemonDetails)]);
+
+  // FUNCTIONS ZONE
 
   const getPokemonId = (initialPokemonDetails) => {
     if (route.query.id) {

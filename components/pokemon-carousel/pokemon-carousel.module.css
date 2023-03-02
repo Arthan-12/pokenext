@@ -1,0 +1,25 @@
+.imageContainer {
+  padding: 20%;
+}
+
+.carouselContainer {
+  width: 60%;
+}
+
+@media screen and (max-width: 1100px) {
+  .carouselContainer {
+    width: 80%;
+  }
+
+  .imageContainer {
+    padding: 10px;
+  }
+
+  .carouselPrevChevron {
+    padding: -70px;
+  }
+
+  .carouselNextChevron {
+    padding: -70px;
+  }
+}

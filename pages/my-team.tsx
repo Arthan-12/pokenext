@@ -6,11 +6,10 @@ import { Pokemon } from '../models/pokemon-model';
 import { Button } from 'react-bootstrap';
 import PokemonList from '../components/pokemon-list.tsx/pokemon-list';
 import InfoDialog from '../components/info-dialog/info-dialog';
-import Dropzone from '../components/multiple-drag-and-drop/dropzone/dropzone';
 import PokemonSearchInput from '../components/pokemon-search-input/pokemon-search-input';
-import PokemonFilter from '../components/pokemon-filter/pokemon-filter';
 import PokemonOrderBy from '../components/pokemon-order-by/pokemon-order-by';
 import ConfirmDialog from '../components/confirm-dialog/confirm-dialog';
+import PokemonFilter from '../components/pokemon-filter/pokemon-filter';
 
 const initialPokeList: Pokemon[] = [];
 

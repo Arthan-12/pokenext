@@ -36,6 +36,7 @@ export default function MyTeam() {
   useEffect(() => {
     setPokemonCapturedList(pokemonList);
     setPokemonFilteredCapturedList(pokemonList);
+    console.log(inputValue);
   }, [JSON.stringify(pokemonList)]);
 
   // const clearPokemonList = () => {
@@ -84,7 +85,7 @@ export default function MyTeam() {
     setValue(inputValue);
     let filteredPokemon: Pokemon[] = [];
     if (inputValue.length > 0) {
-      filteredPokemon = pokemonFilteredCapturedList.filter(
+      filteredPokemon = pokemonCapturedList.filter(
         (pokemon) =>
           pokemon.id.toString().includes(inputValue.toLowerCase()) ||
           pokemon.name.toLowerCase().includes(inputValue.toLowerCase())

@@ -45,7 +45,7 @@ const PokemonCarousel = ({ pokemon }: Props) => {
     } else if (index === 2) {
       return (subtitleText = `shiny ${pokemon.name} front view`);
     } else if (index === 3) {
-      return (subtitleText = `shiny ${pokemon.name} front view`);
+      return (subtitleText = `shiny ${pokemon.name} back view`);
     }
   };
 
@@ -60,7 +60,7 @@ const PokemonCarousel = ({ pokemon }: Props) => {
           className={styles.carouselPrevChevron}
           style={{ color: '#3b4cca' }}
         >
-          <FontAwesomeIcon fontSize="18" icon={faChevronLeft} />
+          <FontAwesomeIcon fontSize="32" icon={faChevronLeft} />
         </span>
       }
       nextIcon={
@@ -68,7 +68,7 @@ const PokemonCarousel = ({ pokemon }: Props) => {
           className={styles.carouselNextChevron}
           style={{ color: '#3b4cca' }}
         >
-          <FontAwesomeIcon fontSize="18" icon={faChevronRight} />
+          <FontAwesomeIcon fontSize="32" icon={faChevronRight} />
         </span>
       }
       className={styles.carouselContainer}

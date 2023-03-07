@@ -11,6 +11,7 @@ interface Props {
   input?: string;
   required?: boolean;
   getTypedValue: (value?: any) => void;
+  clearByKey?: (key: 'backspace' | 'delete') => void;
   clearSelectedPokemon: (clear?: boolean) => void;
 }
 
@@ -18,6 +19,7 @@ const PokemonSearchInput: React.FC<Props> = ({
   input = null,
   required = false,
   getTypedValue,
+  clearByKey,
   clearSelectedPokemon,
 }) => {
   const [inputValue, setValue] = useState('');
@@ -43,7 +45,10 @@ const PokemonSearchInput: React.FC<Props> = ({
   };
 
   const handleKeyUp = (event: any) => {
-    const typedValue = event.target.value;
+    let typedValue = event.target.value;
+    if (event.key === 'Backspace' || event.key === 'Delete') {
+      typedValue = typedValue.substring(typedValue.lenght - 1);
+    }
     if (typedValue.length > 0) {
       setDisableClear(false);
     } else {

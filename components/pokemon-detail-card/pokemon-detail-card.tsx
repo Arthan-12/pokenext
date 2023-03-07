@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { Card, Nav, Button, Container, Carousel, Toast } from 'react-bootstrap';
+import {
+  Card,
+  Nav,
+  Button,
+  Container,
+  Carousel,
+  Toast,
+  ToastContainer,
+} from 'react-bootstrap';
 import {
   BarChart,
   XAxis,
@@ -114,30 +122,32 @@ const PokemonDetailCard = ({ pokemon }: Props) => {
           </Button>
         </Card.Footer>
       </Card>
-      <Toast
-        onClose={() => setSuccesToast(false)}
-        show={showSuccesToast}
-        delay={3000}
-        autohide
-        className="mt-3"
-        bg="success"
-      >
-        <Toast.Body style={{ color: '#ffffff' }}>
-          Woohoo, Pokémon captured!
-        </Toast.Body>
-      </Toast>
-      <Toast
-        onClose={() => setErrorToast(false)}
-        show={showErrorToast}
-        delay={3000}
-        autohide
-        className="mt-3"
-        bg="danger"
-      >
-        <Toast.Body style={{ color: '#ffffff' }}>
-          Sorry, you've already captured this Pokémon! Try another one
-        </Toast.Body>
-      </Toast>
+      <ToastContainer>
+        <Toast
+          onClose={() => setSuccesToast(false)}
+          show={showSuccesToast}
+          delay={3000}
+          autohide
+          className="mt-3"
+          bg="success"
+        >
+          <Toast.Body style={{ color: '#ffffff' }}>
+            Woohoo, Pokémon captured!
+          </Toast.Body>
+        </Toast>
+        <Toast
+          onClose={() => setErrorToast(false)}
+          show={showErrorToast}
+          delay={3000}
+          autohide
+          className="mt-3"
+          bg="danger"
+        >
+          <Toast.Body style={{ color: '#ffffff' }}>
+            Sorry, you've already captured this Pokémon! Try another one
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
     </>
   );
 };

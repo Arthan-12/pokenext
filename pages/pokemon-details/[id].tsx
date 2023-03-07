@@ -45,7 +45,7 @@ export default function PokemonDetail() {
   return (
     <>
       <Navbar />
-      <main className={styles.main}>
+      <main className={`${styles.main} ${styles.infoContainer}`}>
         {pokemonDetails && checkRouteId() ? (
           <>
             <PokemonDetailCard pokemon={pokemonDetails} />

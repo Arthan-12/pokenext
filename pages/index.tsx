@@ -76,7 +76,8 @@ export default function Home() {
     } else {
       setSearchingState(true);
       setNotFoundState(false);
-      PokemonApiService.searchPokemon(pokemon)
+      const pokemonNameOrId = pokemon.toLocaleLowerCase();
+      PokemonApiService.searchPokemon(pokemonNameOrId)
         .then((response: any) => {
           setSearchedPokemon(response);
           setContext(response);

@@ -36,7 +36,6 @@ export default function MyTeam() {
   useEffect(() => {
     setPokemonCapturedList(pokemonList);
     setPokemonFilteredCapturedList(pokemonList);
-    console.log(inputValue);
   }, [JSON.stringify(pokemonList)]);
 
   // const clearPokemonList = () => {

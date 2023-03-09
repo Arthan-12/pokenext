@@ -52,7 +52,7 @@ export default function PokemonDetail() {
           </>
         ) : (
           <>
-            <p>There's nothing here</p>
+            <p>{`There's nothing here`}</p>
           </>
         )}
       </main>

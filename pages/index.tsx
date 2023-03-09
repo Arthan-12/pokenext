@@ -221,7 +221,7 @@ export default function Home() {
               bg="danger"
             >
               <Toast.Body style={{ color: '#ffffff' }}>
-                Sorry, you've already captured this Pokémon! Try another one
+                {`Sorry, you've already captured this Pokémon! Try another one`}
               </Toast.Body>
             </Toast>
             <InfoDialog info="pokedex" />

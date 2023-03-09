@@ -21,7 +21,7 @@ const NotFoundPokemon: React.FC = ({}) => {
           src={'/img/not-found-psyduck.jpg'}
           alt="not-found-placeholder"
         />
-        <span>Ooops! Couldn't find any Pokémon with this name :(</span>
+        <span>{`Ooops! Couldn't find any Pokémon with this name :(`}</span>
       </div>
     </>
   );
